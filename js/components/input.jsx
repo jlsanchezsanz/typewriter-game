@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import ReactDOM from 'react-dom';
 
 class Input extends Component {
   constructor(props) {
@@ -16,10 +15,11 @@ class Input extends Component {
   }
 
   handleChange(e) {
-    this.setState({ 
-      value: e.target.value,
-      keyStrokes: this.state.keyStrokes + 1
-    });
+    this.setState({ value: e.target.value });
+  }
+
+  handleKeyDown() {
+    this.setState({ keyStrokes: this.state.keyStrokes + 1 });
   }
 
   getKeyStrokes() {
@@ -29,11 +29,11 @@ class Input extends Component {
   render() {
     return (
       <div>
-        Input
         <input
           type="text"
           autoFocus={this.props.autofocus}
           value={this.state.value}
+          onKeyDown={this.handleKeyDown.bind(this)}
           onChange={this.handleChange.bind(this)} />
       </div>
     );

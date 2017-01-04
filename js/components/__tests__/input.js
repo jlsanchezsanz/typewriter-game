@@ -2,12 +2,14 @@ var React = require('react');
 var TestUtils = require('react-dom/lib/ReactTestUtils');
 var expect = require('expect');
 var Input = require('../input').default;
-var input;
-var innerInput;
 
 describe('Input', function() {
+  var input;
+  var innerInput;
+
   beforeEach(function() {
-    input = TestUtils.renderIntoDocument(<Input/>);
+    var onDataChange = function() {};
+    input = TestUtils.renderIntoDocument(<Input onDataChange={onDataChange} />);
     innerInput = TestUtils.findRenderedDOMComponentWithTag(input, 'input');
   });
 
@@ -29,14 +31,17 @@ describe('Input', function() {
     it('should have "keyStrokes" property', function() {
       expect(Input.PropTypes.keyStrokes).toEqual(React.PropTypes.number);
     });
+
+    it('should have "onDataChange" property', function() {
+      expect(Input.PropTypes.onDataChange).toEqual(React.PropTypes.function);
+    });
   });
 
   describe('Value', function() {
     it('should update value on input keydown', function() {
       innerInput.value = 'randomValue';
-      TestUtils.Simulate.keyDown(innerInput, {key: 'a', which: 65});
       TestUtils.Simulate.change(innerInput);
-      expect(innerInput.value).toEqual('randomValue');
+      expect(input.state.value).toEqual('randomValue');
     });
   });
 
@@ -51,11 +56,19 @@ describe('Input', function() {
   });
 
   describe('Publish info', function() {
-    it('should update number of strokes on keydown', function() {
-      expect(input.getKeyStrokes()).toEqual(0);
-      TestUtils.Simulate.keyDown(innerInput, {key: 'a', which: 65});
+    it('should update number of strokes on change value', function() {
+      expect(input.state.keyStrokes).toEqual(0);
+      TestUtils.Simulate.keyDown(innerInput, {key: 'a', keyCode: 65});
       TestUtils.Simulate.change(innerInput);
-      expect(input.getKeyStrokes()).toEqual(1);
+      expect(input.state.keyStrokes).toEqual(1);
+    });
+
+    it('should execute onDataChange method on change value', function() {
+      innerInput.value = 'randomValue';
+      var spy = expect.spyOn(input.state, 'onDataChange');
+      TestUtils.Simulate.keyDown(innerInput, {key: 'a', keyCode: 65});
+      TestUtils.Simulate.change(innerInput);
+      expect(spy.getLastCall().arguments).toEqual([{keyStrokes: 1, value: 'randomValue'}]);
     });
   });
 });

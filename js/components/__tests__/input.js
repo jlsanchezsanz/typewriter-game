@@ -28,6 +28,10 @@ describe('Input', function() {
       expect(Input.PropTypes.autofocus).toEqual(React.PropTypes.bool);
     });
 
+    it('should have "disabled" property', function() {
+      expect(Input.PropTypes.disabled).toEqual(React.PropTypes.bool);
+    });
+
     it('should have "keyStrokes" property', function() {
       expect(Input.PropTypes.keyStrokes).toEqual(React.PropTypes.number);
     });

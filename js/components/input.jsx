@@ -7,6 +7,7 @@ class Input extends Component {
       value: props.defaultValue || '',
       autofocus: props.autofocus,
       keyStrokes: 0,
+      disabled: props.disabled || false,
       onDataChange: props.onDataChange || function() {}
     };
   }
@@ -28,8 +29,10 @@ class Input extends Component {
     this._fireDataChange(state);
   }
 
-  getKeyStrokes() {
-    return this.state.keyStrokes;
+  componentWillReceiveProps(nextProps) {
+    if (this.props.disabled !== nextProps.disabled) {
+      this.setState({ disabled: nextProps.disabled });
+    }
   }
 
   render() {
@@ -38,6 +41,7 @@ class Input extends Component {
         <input
           type="text"
           autoFocus={this.state.autofocus}
+          disabled={this.state.disabled}
           value={this.state.value}
           onChange={this.handleChange.bind(this)} />
       </div>
@@ -48,6 +52,7 @@ class Input extends Component {
 Input.PropTypes = {
   defaultValue: PropTypes.string,
   autofocus: PropTypes.bool,
+  disabled: PropTypes.bool,
   keyStrokes: PropTypes.number,
   onDataChange: PropTypes.function
 };

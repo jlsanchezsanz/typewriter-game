@@ -6,7 +6,8 @@ class Input extends Component {
     this.state = {
       value: props.defaultValue || '',
       autofocus: props.autofocus,
-      keyStrokes: 0
+      keyStrokes: 0,
+      onDataChange: props.onDataChange || function() {}
     };
   }
 
@@ -14,12 +15,17 @@ class Input extends Component {
     this.setState({ value: '' });
   }
 
-  handleChange(e) {
-    this.setState({ value: e.target.value });
+  _fireDataChange(data) {
+    this.state.onDataChange(data);
   }
 
-  handleKeyDown() {
-    this.setState({ keyStrokes: this.state.keyStrokes + 1 });
+  handleChange(e) {
+    var state = {
+      keyStrokes: this.state.keyStrokes + 1,
+      value: e.target.value
+    };
+    this.setState(state);
+    this._fireDataChange(state);
   }
 
   getKeyStrokes() {
@@ -31,9 +37,8 @@ class Input extends Component {
       <div>
         <input
           type="text"
-          autoFocus={this.props.autofocus}
+          autoFocus={this.state.autofocus}
           value={this.state.value}
-          onKeyDown={this.handleKeyDown.bind(this)}
           onChange={this.handleChange.bind(this)} />
       </div>
     );
@@ -43,7 +48,8 @@ class Input extends Component {
 Input.PropTypes = {
   defaultValue: PropTypes.string,
   autofocus: PropTypes.bool,
-  keyStrokes: PropTypes.number
+  keyStrokes: PropTypes.number,
+  onDataChange: PropTypes.function
 };
 
 export default Input;

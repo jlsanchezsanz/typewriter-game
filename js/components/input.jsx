@@ -12,10 +12,6 @@ class Input extends Component {
     };
   }
 
-  clean() {
-    this.setState({ value: '' });
-  }
-
   _fireDataChange(data) {
     this.state.onDataChange(data);
   }
@@ -32,6 +28,10 @@ class Input extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.disabled !== nextProps.disabled) {
       this.setState({ disabled: nextProps.disabled });
+    }
+
+    if (nextProps.defaultValue !== undefined && this.state.value !== nextProps.defaultValue) {
+      this.setState({ value: nextProps.defaultValue });
     }
   }
 

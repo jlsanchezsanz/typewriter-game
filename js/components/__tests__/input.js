@@ -49,16 +49,6 @@ describe('Input', function() {
     });
   });
 
-  describe('Clean', function() {
-    it('should be cleaned when "clean" method is executed', function() {
-      innerInput.value = 'randomValue';
-      TestUtils.Simulate.change(innerInput);
-      expect(innerInput.value).toEqual('randomValue');
-      input.clean();
-      expect(innerInput.value).toEqual('');
-    });
-  });
-
   describe('Publish info', function() {
     it('should update number of strokes on change value', function() {
       expect(input.state.keyStrokes).toEqual(0);

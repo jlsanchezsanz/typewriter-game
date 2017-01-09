@@ -5,7 +5,10 @@ class TextPanel extends Component {
     super(props);
     this.state = {
       text: props.text || '',
-      readyWords: [] 
+      word: props.word || '',
+      readyWords: [],
+      onWordFound: props.onWordFound || function() {},
+      onWordNotFound: props.onWordNotFound || function() {}
     };
     this.state.words = this.splitText(this.state.text);
   }
@@ -32,15 +35,34 @@ class TextPanel extends Component {
     var index = readyWords.findIndex(_word => _word === word);
     if (index >= 0) {
       readyWords.splice(index, 1);
+      this.setState({ readyWords: readyWords });
+      return true;
     }
-    this.setState({ readyWords: readyWords });
+  }
+
+  _fireWordFound(data) {
+    this.state.onWordFound(data);
+  }
+
+  _fireWordNotFound() {
+    this.state.onWordNotFound();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.word !== this.props.word && nextProps.word.length) {
+      var matches = this.state.readyWords.filter(_word => _word.indexOf(nextProps.word) === 0);
+      if (!matches.length) {
+        this._fireWordNotFound();
+      } else if (this.removeWord(nextProps.word)) {
+        this._fireWordFound(nextProps.word);
+      }
+    }
   }
 
   render() {
+    {this.props.word}
     return (
       <div>
-        <button onClick={this.showWord.bind(this)}>showWord</button>
-        <button onClick={this.removeWord.bind(this, 'una')}>removeWord</button>
         <div className="wordsContainer">
           {this.state.readyWords.map((word, index) => <span className="word" key={`word-${index}`}>{word}</span>)}
         </div>
@@ -51,8 +73,9 @@ class TextPanel extends Component {
 
 TextPanel.PropTypes = {
   text: PropTypes.string,
-  words: React.PropTypes.arrayOf(React.PropTypes.string),
-  readyWords: React.PropTypes.arrayOf(React.PropTypes.string)
+  word: React.PropTypes.string,
+  onWordFound: PropTypes.function,
+  onWordNotFound: PropTypes.function
 };
 
 export default TextPanel;

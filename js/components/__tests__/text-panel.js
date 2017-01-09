@@ -16,8 +16,8 @@ describe('TextPanel', function() {
       expect(TextPanel.PropTypes.text).toEqual(React.PropTypes.string);
     });
 
-    it('should have "words" property', function() {
-      expect(TextPanel.PropTypes.words).toEqual(React.PropTypes.arrayOf(React.PropTypes.string));
+    it('should have "word" property', function() {
+      expect(TextPanel.PropTypes.word).toEqual(React.PropTypes.string);
     });
   });
 
@@ -41,6 +41,13 @@ describe('TextPanel', function() {
       expect(textPanel.state.readyWords.length).toEqual(1);
       expect(TestUtils.findRenderedDOMComponentWithClass(textPanel, 'word').innerText).toEqual('this');
       textPanel.removeWord('this');
+      expect(textPanel.state.readyWords.length).toEqual(0);
+    });
+
+    it('should look for "word" in "words" and remove it if found', function() {
+      textPanel.showWord();
+      expect(textPanel.state.readyWords.length).toEqual(1);
+      textPanel = TestUtils.renderIntoDocument(<TextPanel text="this is a mock text" word="this" />);
       expect(textPanel.state.readyWords.length).toEqual(0);
     });
   });

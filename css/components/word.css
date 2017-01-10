@@ -1,0 +1,9 @@
+.Word {
+  position: absolute;
+  top: -20px;
+  transition: top 10s linear;
+}
+
+.ready {
+  top: 100%;
+}

@@ -1,0 +1,6 @@
+.TextPanel {
+  background-color: yellow;
+  width: 70%;
+  height: 500px;
+  position: relative;
+}

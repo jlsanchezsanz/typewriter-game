@@ -1,3 +1,5 @@
+require('../../css/components/text-panel.css');
+
 import React, {Component, PropTypes} from 'react';
 
 class TextPanel extends Component {
@@ -62,7 +64,7 @@ class TextPanel extends Component {
   render() {
     {this.props.word}
     return (
-      <div>
+      <div className="TextPanel">
         <div className="wordsContainer">
           {this.state.readyWords.map((word, index) => <span className="word" key={`word-${index}`}>{word}</span>)}
         </div>

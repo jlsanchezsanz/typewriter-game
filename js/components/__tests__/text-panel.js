@@ -31,7 +31,7 @@ describe('TextPanel', function() {
       expect(textPanel.state.words.length).toEqual(5);
       expect(textPanel.state.readyWords.length).toEqual(0);
       textPanel.showWord();
-      expect(TestUtils.findRenderedDOMComponentWithClass(textPanel, 'word').innerText).toEqual('this');
+      expect(TestUtils.findRenderedDOMComponentWithClass(textPanel, 'Word').innerText).toEqual('this');
       expect(textPanel.state.words.length).toEqual(4);
       expect(textPanel.state.readyWords.length).toEqual(1);
     });
@@ -39,7 +39,7 @@ describe('TextPanel', function() {
     it('should remove a specific word when removeWord() is executed', function() {
       textPanel.showWord();
       expect(textPanel.state.readyWords.length).toEqual(1);
-      expect(TestUtils.findRenderedDOMComponentWithClass(textPanel, 'word').innerText).toEqual('this');
+      expect(TestUtils.findRenderedDOMComponentWithClass(textPanel, 'Word').innerText).toEqual('this');
       textPanel.removeWord('this');
       expect(textPanel.state.readyWords.length).toEqual(0);
     });

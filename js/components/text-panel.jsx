@@ -1,6 +1,8 @@
 require('../../css/components/text-panel.css');
 
 import React, {Component, PropTypes} from 'react';
+import ReactDOM from 'react-dom';
+import Word from './word';
 
 class TextPanel extends Component {
   constructor(props) {
@@ -66,7 +68,7 @@ class TextPanel extends Component {
     return (
       <div className="TextPanel">
         <div className="wordsContainer">
-          {this.state.readyWords.map((word, index) => <span className="word" key={`word-${index}`}>{word}</span>)}
+          {this.state.readyWords.map((word, index) => <Word key={`word-${index}`} defaultValue={word} />)}
         </div>
       </div>
     );

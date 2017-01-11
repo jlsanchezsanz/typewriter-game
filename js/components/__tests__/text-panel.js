@@ -41,7 +41,9 @@ describe('TextPanel', function() {
       expect(textPanel.state.readyWords.length).toEqual(1);
       expect(TestUtils.findRenderedDOMComponentWithClass(textPanel, 'Word').innerText).toEqual('this');
       textPanel.removeWord('this');
-      expect(textPanel.state.readyWords.length).toEqual(0);
+      var word = textPanel.state.readyWords.find(word => word.value === 'this');
+      expect(word.value).toEqual('this');
+      expect(word.completed).toEqual(true);
     });
 
     it('should look for "word" in "words" and remove it if found', function() {

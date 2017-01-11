@@ -27,8 +27,12 @@ class TextPanel extends Component {
       var words = this.state.words;
       var readyWords = this.state.readyWords;
       var word = words.shift();
-      readyWords.push(word);
-      this.positions.push(Math.floor(Math.random() * 100));
+      readyWords.push({
+        value: word,
+        index: readyWords.length,
+        position: Math.floor(Math.random() * 100),
+        completed: false
+      });
       this.setState({
         words: words,
         readyWords: readyWords
@@ -38,10 +42,9 @@ class TextPanel extends Component {
 
   removeWord(word) {
     var readyWords = this.state.readyWords;
-    var index = readyWords.findIndex(_word => _word === word);
+    var index = readyWords.findIndex(_word => !_word.completed && _word.value === word);
     if (index >= 0) {
-      readyWords.splice(index, 1);
-      this.positions.splice(index, 1);
+      readyWords[index].completed = true;
       this.setState({ readyWords: readyWords });
       return true;
     }
@@ -57,7 +60,7 @@ class TextPanel extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.word !== this.props.word && nextProps.word.length) {
-      var matches = this.state.readyWords.filter(_word => _word.indexOf(nextProps.word) === 0);
+      var matches = this.state.readyWords.filter(_word => _word.value.indexOf(nextProps.word) === 0);
       if (!matches.length) {
         this._fireWordNotFound();
       } else if (this.removeWord(nextProps.word)) {
@@ -70,7 +73,7 @@ class TextPanel extends Component {
     return (
       <div className="TextPanel">
         <div className="words-container">
-          {this.state.readyWords.map((word, index) => <Word key={`word-${index}`} defaultValue={word} left={this.positions[index]}/>)}
+          {this.state.readyWords.map((word, index) => !word.completed ? <Word key={`${word.value}-${word.index}`} defaultValue={word.value} left={word.position} /> : null)}
         </div>
       </div>
     );

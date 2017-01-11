@@ -14,7 +14,7 @@ class Word extends Component {
 
   componentDidMount() {
     setTimeout(function() {
-      this.setState({ cssClasses: this.state.cssClasses + ' ready'});
+      this.setState({ cssClasses: `${this.state.cssClasses} ready` });
     }.bind(this), 10);
   }
 

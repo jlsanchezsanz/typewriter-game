@@ -24,5 +24,9 @@ describe('Word', function() {
     it('should have "animate" property', function() {
       expect(Word.PropTypes.animate).toEqual(React.PropTypes.bool);
     });
+
+    it('should have "left" property', function() {
+      expect(Word.PropTypes.left).toEqual(React.PropTypes.number);
+    });
   });
 });

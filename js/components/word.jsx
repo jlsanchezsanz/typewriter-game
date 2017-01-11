@@ -19,12 +19,13 @@ class Word extends Component {
   }
 
   render() {
-    return (<span className={this.state.cssClasses}>{this.props.defaultValue}</span>);
+    return (<span className={this.state.cssClasses} style={{left: this.props.left + '%'}}>{this.props.defaultValue}</span>);
   }
 };
 
 Word.PropTypes = {
   defaultValue: PropTypes.string.isRequired,
+  left: PropTypes.number.isRequired,
   animate: PropTypes.bool
 };
 

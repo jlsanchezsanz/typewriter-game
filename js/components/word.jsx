@@ -7,7 +7,6 @@ class Word extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: props.defaultValue,
       animate: props.animate,
       cssClasses: 'Word'
     }
@@ -20,7 +19,7 @@ class Word extends Component {
   }
 
   render() {
-    return (<span className={this.state.cssClasses}>{this.state.value}</span>);    
+    return (<span className={this.state.cssClasses}>{this.props.defaultValue}</span>);
   }
 };
 

@@ -15,6 +15,7 @@ class TextPanel extends Component {
       onWordNotFound: props.onWordNotFound || function() {}
     };
     this.state.words = this.splitText(this.state.text);
+    this.positions = [];
   }
 
   splitText(text) {
@@ -27,9 +28,10 @@ class TextPanel extends Component {
       var readyWords = this.state.readyWords;
       var word = words.shift();
       readyWords.push(word);
+      this.positions.push(Math.floor(Math.random() * 100));
       this.setState({
         words: words,
-        readyWords: readyWords,
+        readyWords: readyWords
       });
     }
   }
@@ -39,6 +41,7 @@ class TextPanel extends Component {
     var index = readyWords.findIndex(_word => _word === word);
     if (index >= 0) {
       readyWords.splice(index, 1);
+      this.positions.splice(index, 1);
       this.setState({ readyWords: readyWords });
       return true;
     }
@@ -64,11 +67,10 @@ class TextPanel extends Component {
   }
 
   render() {
-    {this.props.word}
     return (
       <div className="TextPanel">
-        <div className="wordsContainer">
-          {this.state.readyWords.map((word, index) => <Word key={`word-${index}`} defaultValue={word} />)}
+        <div className="words-container">
+          {this.state.readyWords.map((word, index) => <Word key={`word-${index}`} defaultValue={word} left={this.positions[index]}/>)}
         </div>
       </div>
     );

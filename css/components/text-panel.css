@@ -1,6 +1,7 @@
 .TextPanel {
-  background-color: yellow;
+  border: 1px solid #000;
   width: 70%;
   height: 500px;
   position: relative;
+  overflow: hidden;
 }

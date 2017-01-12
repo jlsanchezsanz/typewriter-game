@@ -12,16 +12,15 @@ describe('Timer', function() {
 
   beforeEach(function() {
     onDataChange = function() {};
-    timer = TestUtils.renderIntoDocument(<Timer time="30" onDataChange={onDataChange} />);
-    clock = sinon.useFakeTimers();
+    timer = TestUtils.renderIntoDocument(<Timer timeLeft="30" onDataChange={onDataChange} />);
   });
 
   describe('Mount component', function() {
   });
 
   describe('Check its properties', function() {
-    it('should have "time" property', function() {
-      expect(Timer.PropTypes.time).toEqual(React.PropTypes.number);
+    it('should have "timeLeft" property', function() {
+      expect(Timer.PropTypes.timeLeft).toEqual(React.PropTypes.number);
     });
 
     it('should have "running" property', function() {
@@ -46,7 +45,6 @@ describe('Timer', function() {
     });
 
     it('should set "running" to false when timeLeft is 0', function() {
-
       expect(timer.state.running).toEqual(false);
     });
   });

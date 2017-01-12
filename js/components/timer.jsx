@@ -5,7 +5,8 @@ class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timeLeft: props.time || 0,
+      timeLeft: props.timeLeft || 0,
+      time: 0,
       running: false,
       onDataChange: props.onDataChange || function() {},
       interval: null
@@ -13,20 +14,30 @@ class Timer extends Component {
   }
 
   countdown() {
-    if (this.state.timeLeft) {
-      this.setState({ timeLeft: this.state.timeLeft - 1 });
-    } else {
+    this.setState({
+      timeLeft: this.state.timeLeft - 1,
+      time: this.state.time + 1
+    });
+    if (!this.state.timeLeft) {
       clearInterval(this.state.interval);
       this.setState({
         running: false,
         interval: null
       });
     }
-    this._fireDataChange(this.state.timeLeft);
+    this._fireDataChange({
+      timeLeft: this.state.timeLeft,
+      time: this.state.time,
+      running: this.state.running
+    });
   }
 
   _fireDataChange(data) {
     this.state.onDataChange(data);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ timeLeft: nextProps.timeLeft });
   }
 
   start() {
@@ -49,7 +60,7 @@ class Timer extends Component {
 }
 
 Timer.PropTypes = {
-  time: PropTypes.number,
+  timeLeft: PropTypes.number,
   running: PropTypes.bool,
   onDataChange: PropTypes.func
 }

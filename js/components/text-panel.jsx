@@ -12,14 +12,13 @@ class TextPanel extends Component {
       word: props.word || '',
       readyWords: [],
       onWordFound: props.onWordFound || function() {},
-      onWordNotFound: props.onWordNotFound || function() {}
+      onWordNotFound: props.onWordNotFound || function() {},
+      words: this.splitText(props.text)
     };
-    this.state.words = this.splitText(this.state.text);
-    this.positions = [];
   }
 
   splitText(text) {
-    return text.replace(/[-[\]{}()*+?.,\\^$|#]/g, '').replace(/\n/, ' ').toLowerCase().split(' ');
+    return text.replace(/[-[\]{}()*+?.,:;\\^$|#]/g, '').replace(/\n/, ' ').toLowerCase().split(' ');
   }
 
   showWord() {
@@ -58,6 +57,12 @@ class TextPanel extends Component {
     this.state.onWordNotFound();
   }
 
+  onNotCompletedWord(word) {
+    var readyWords = this.state.readyWords;
+    readyWords[word.split('-')[1]].completed = true;
+    this.setState({ readyWords: readyWords });
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.word !== this.props.word && nextProps.word.length) {
       var matches = this.state.readyWords.filter(_word => _word.value.indexOf(nextProps.word) === 0);
@@ -73,7 +78,14 @@ class TextPanel extends Component {
     return (
       <div className="TextPanel">
         <div className="words-container">
-          {this.state.readyWords.map((word, index) => !word.completed ? <Word key={`${word.value}-${word.index}`} defaultValue={word.value} left={word.position} /> : null)}
+          {this.state.readyWords.map((word, index) => !word.completed
+            ? <Word
+                key={`${word.value}-${word.index}`}
+                id={`${word.value}-${word.index}`}
+                defaultValue={word.value}
+                left={word.position}
+                onNotCompleted={this.onNotCompletedWord.bind(this)} />
+            : null)}
         </div>
       </div>
     );

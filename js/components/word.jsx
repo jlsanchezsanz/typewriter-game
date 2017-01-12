@@ -16,7 +16,7 @@ class Word extends Component {
     setTimeout(function() {
       this.setState({ cssClasses: `${this.state.cssClasses} ready` });
     }.bind(this), 10);
-    ReactDOM.findDOMNode(this.refs.word).addEventListener('transitionend', this.props.onNotCompleted.bind(this));
+    ReactDOM.findDOMNode(this.refs.word).addEventListener('transitionend', this.props.onNotCompleted.bind(this, this.props.id));
   }
 
   componentWillUnmount () {

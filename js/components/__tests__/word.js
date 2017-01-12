@@ -28,5 +28,9 @@ describe('Word', function() {
     it('should have "left" property', function() {
       expect(Word.PropTypes.left).toEqual(React.PropTypes.number);
     });
+
+    it('should have "onNotCompleted" property', function() {
+      expect(Word.PropTypes.onNotCompleted).toEqual(React.PropTypes.function);
+    });
   });
 });

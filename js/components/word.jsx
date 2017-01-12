@@ -16,11 +16,16 @@ class Word extends Component {
     setTimeout(function() {
       this.setState({ cssClasses: `${this.state.cssClasses} ready` });
     }.bind(this), 10);
+    ReactDOM.findDOMNode(this.refs.word).addEventListener('transitionend', this.props.onNotCompleted.bind(this));
+  }
+
+  componentWillUnmount () {
+    ReactDOM.findDOMNode(this.refs.word).removeEventListener('transitionend', null);
   }
 
   render() {
     return (
-      <span className={this.state.cssClasses} style={{left: this.props.left + '%'}}>{this.props.defaultValue}</span>
+      <span ref="word" className={this.state.cssClasses} style={{left: this.props.left + '%'}}>{this.props.defaultValue}</span>
     );
   }
 };
@@ -28,11 +33,13 @@ class Word extends Component {
 Word.PropTypes = {
   defaultValue: PropTypes.string.isRequired,
   left: PropTypes.number.isRequired,
-  animate: PropTypes.bool
+  animate: PropTypes.bool,
+  onNotCompleted: PropTypes.function
 };
 
 Word.defaultProps = {
-  animate: false
+  animate: false,
+  onNotCompleted: function() {}
 };
 
 export default Word;

@@ -65,7 +65,7 @@ class TextPanel extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.word !== this.props.word && nextProps.word.length) {
-      var matches = this.state.readyWords.filter(_word => _word.value.indexOf(nextProps.word) === 0);
+      var matches = this.state.readyWords.filter(_word => _word.value.indexOf(nextProps.word) === 0 && !_word.completed);
       if (!matches.length) {
         this._fireWordNotFound();
       } else if (this.removeWord(nextProps.word)) {

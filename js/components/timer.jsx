@@ -1,3 +1,5 @@
+require('../../css/components/timer.css');
+
 import React, {Component, PropTypes} from 'react';
 
 class Timer extends Component {
@@ -49,7 +51,9 @@ class Timer extends Component {
 
   render() {
     return (
-      <span>{this.state.timeLeft}</span>
+      <div className="Timer">
+        <span>{this.state.timeLeft}</span>
+      </div>
     );
   }
 

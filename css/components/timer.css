@@ -1,0 +1,5 @@
+.Timer {
+  flex-basis: max-content;
+  display: flex;
+  justify-content: center;
+}

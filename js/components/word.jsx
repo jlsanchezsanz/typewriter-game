@@ -20,9 +20,7 @@ class Word extends Component {
 
   render() {
     return (
-      <div className="wrapper">
-        <span className={this.state.cssClasses} style={{left: this.props.left + '%'}}>{this.props.defaultValue}</span>
-      </div>
+      <span className={this.state.cssClasses} style={{left: this.props.left + '%'}}>{this.props.defaultValue}</span>
     );
   }
 };

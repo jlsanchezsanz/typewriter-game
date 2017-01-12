@@ -1,3 +1,5 @@
+require('../../css/components/input.css');
+
 import React, {Component, PropTypes} from 'react';
 
 class Input extends Component {
@@ -37,7 +39,7 @@ class Input extends Component {
 
   render() {
     return (
-      <div>
+      <div className="Input">
         <input
           type="text"
           autoFocus={this.state.autofocus}

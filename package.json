@@ -4,7 +4,8 @@
   "description": "Typewriter simulator game",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack-dev-server --colors --progress --open",
+    "test": "karma start --single-run=false karma.config.js"
   },
   "author": "Jose Luis Sánchez Sanz",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "karma-webpack": "^1.8.0",
     "mocha": "^3.2.0",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.3"
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
   }
 }

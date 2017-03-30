@@ -1,7 +1,6 @@
 .TextPanel {
   border: 1px solid #000;
-  width: 70%;
-  height: 500px;
+  flex-grow: 6;
   position: relative;
   overflow: hidden;
 }

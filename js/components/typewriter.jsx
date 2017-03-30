@@ -1,7 +1,10 @@
+require('../../css/components/typewriter.css');
+
 import React, {Component, PropTypes} from 'react';
 import Input from './input';
 import TextPanel from './text-panel';
 import Timer from './timer';
+import Score from './score';
 
 class Typewriter extends Component {
   constructor(props) {
@@ -63,12 +66,19 @@ class Typewriter extends Component {
         <Timer
           timeLeft={this.state.timeLeft}
           onDataChange={this.onTimerDataChange.bind(this)} />
+      <div className="Typewriter">
         <TextPanel
           ref="textPanel"
           text={this.state.text}
           word={this.state.word}
           onWordNotFound={this.onWordNotFound.bind(this)}
           onWordFound={this.onWordFound.bind(this)} />
+        <Score
+          time={this.state.time}
+          errors={this.state.errors}
+          keyStrokes={this.state.keyStrokes}
+          completedWords={this.state.completedWords} />
+      </div>
         <Input
           autofocus
           defaultValue={this.state.inputValue}

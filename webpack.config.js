@@ -7,6 +7,9 @@ module.exports = {
   entry: './js/main.js',
   output: { path: __dirname + 'js/', filename: 'bundle.js' },
   module: {
+    noParse: [
+      /node_modules\/sinon/,
+    ],
     loaders: [
       {
         test: /.jsx?$/,
